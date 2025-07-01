@@ -1,0 +1,13 @@
+[Unit]
+Description=Timer for Let's Encrypt Certificate Auto Renewal
+Requires=certbot-auto-renew.service
+
+[Timer]
+# 毎週火曜日と金曜日のAM01:00(JST) = 月曜日と木曜日のPM16:00(UTC)
+OnCalendar=Mon *-*-* 16:00:00
+OnCalendar=Thu *-*-* 16:00:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=Let's Encrypt Certificate Renewal Failure Notification
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/opt/certbot-auto-renew-monitoring/scripts/failure-notify.sh
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
