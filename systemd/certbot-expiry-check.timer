@@ -3,8 +3,8 @@ Description=Timer for Let's Encrypt Certificate Expiry Check
 Requires=certbot-expiry-check.service
 
 [Timer]
-# 毎日AM02:00(JST) = 前日PM17:00(UTC)
-OnCalendar=*-*-* 17:00:00
+# 毎日AM02:00（ローカル時間）
+OnCalendar=*-*-* 02:00:00
 Persistent=true
 RandomizedDelaySec=300
 
