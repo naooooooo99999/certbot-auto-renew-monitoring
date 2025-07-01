@@ -128,7 +128,6 @@ sudo dnf install -y python3-certbot-dns-route53
 
 2. **セットアップ実行**
    ```bash
-   sudo chmod +x setup.sh
    sudo ./setup.sh
    ```
 
