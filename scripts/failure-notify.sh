@@ -12,7 +12,7 @@ LOCAL_LOG_FILE="/var/log/certbot-auto-renew.log"
 
 # ログ出力関数
 log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >&2
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOCAL_LOG_FILE" >&2
 }
 
 # CloudWatch Logsにメッセージを送信

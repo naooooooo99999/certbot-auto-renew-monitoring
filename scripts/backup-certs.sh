@@ -10,11 +10,11 @@ set -euo pipefail
 S3_BUCKET="certbot-auto-renew-backup"
 BACKUP_SOURCE="/etc/letsencrypt"
 BACKUP_GENERATIONS=3
-LOG_FILE="/var/log/certbot-auto-renew.log"
+LOCAL_LOG_FILE="/var/log/certbot-auto-renew.log"
 
 # ログ出力関数
 log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOCAL_LOG_FILE" >&2
 }
 
 # バックアップファイル作成

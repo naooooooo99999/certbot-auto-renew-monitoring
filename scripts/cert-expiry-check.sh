@@ -14,7 +14,7 @@ LOCAL_LOG_FILE="/var/log/certbot-expiry-check.log"
 
 # ログ出力関数
 log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOCAL_LOG_FILE"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOCAL_LOG_FILE" >&2
 }
 
 # CloudWatch Logsにメッセージを送信

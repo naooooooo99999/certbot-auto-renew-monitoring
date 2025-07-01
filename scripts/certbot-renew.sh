@@ -8,12 +8,12 @@ set -euo pipefail
 
 # 設定値
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_FILE="/var/log/certbot-auto-renew.log"
+LOCAL_LOG_FILE="/var/log/certbot-auto-renew.log"
 APACHE_SERVICE="httpd"
 
 # ログ出力関数
 log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOCAL_LOG_FILE" >&2
 }
 
 # メイン処理
