@@ -224,8 +224,17 @@ configure_systemd() {
     systemctl enable certbot-expiry-check.timer
     
     # タイマーの開始
-    systemctl start certbot-auto-renew.timer
-    systemctl start certbot-expiry-check.timer
+    if systemctl is-active --quiet certbot-auto-renew.timer; then
+        systemctl restart certbot-auto-renew.timer
+    else
+        systemctl start certbot-auto-renew.timer
+    fi
+    
+    if systemctl is-active --quiet certbot-expiry-check.timer; then
+        systemctl restart certbot-expiry-check.timer
+    else
+        systemctl start certbot-expiry-check.timer
+    fi
     
     log_success "systemdサービスを設定しました"
 }
