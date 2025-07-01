@@ -45,7 +45,7 @@ check_requirements() {
     fi
 
     # 必要なコマンドの存在確認
-    local commands=("certbot" "aws" "systemctl" "openssl" "tar")
+    local commands=("certbot" "aws" "systemctl" "openssl" "tar" "jq")
     for cmd in "${commands[@]}"; do
         if ! command -v "$cmd" &> /dev/null; then
             log_error "必要なコマンドが見つかりません: $cmd"

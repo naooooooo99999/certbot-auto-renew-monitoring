@@ -17,7 +17,7 @@ EC2 (Amazon Linux 2023) で Let's Encrypt 証明書の自動更新を行い、Cl
 ```bash
 # Amazon Linux 2023での例
 sudo dnf update -y
-sudo dnf install -y certbot python3-certbot-apache httpd aws-cli openssl tar
+sudo dnf install -y certbot python3-certbot-apache httpd aws-cli openssl tar jq
 
 # Route53 DNS認証を使用する場合は追加で必要
 sudo dnf install -y python3-certbot-dns-route53
