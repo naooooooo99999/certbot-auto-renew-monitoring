@@ -34,16 +34,13 @@ send_to_cloudwatch() {
     fi
 
     # ログイベント送信
+    local json_message
+    json_message=$(printf '%s' "$message" | jq -Rs .)
+
     aws logs put-log-events \
         --log-group-name "$LOG_GROUP_NAME" \
         --log-stream-name "$LOG_STREAM_NAME" \
-        --log-events "$(cat <<EOF
-[{
-    "timestamp": $timestamp,
-    "message": $(echo "$message" | jq -R .)
-}]
-EOF
-)"
+        --log-events "[{\"timestamp\": $timestamp, \"message\": $json_message}]"
 }
 
 # メイン処理
