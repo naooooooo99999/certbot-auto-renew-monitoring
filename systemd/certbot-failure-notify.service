@@ -7,7 +7,7 @@ Wants=network-online.target
 Type=oneshot
 User=root
 Group=root
-ExecStart=/opt/certbot-auto-renew-monitoring/scripts/failure-notify.sh
+ExecStart=__INSTALL_DIR__/scripts/failure-notify.sh
 StandardOutput=journal
 StandardError=journal
 

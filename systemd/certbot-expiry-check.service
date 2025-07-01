@@ -7,7 +7,7 @@ Wants=network-online.target
 Type=oneshot
 User=root
 Group=root
-ExecStart=/opt/certbot-auto-renew-monitoring/scripts/cert-expiry-check.sh
+ExecStart=__INSTALL_DIR__/scripts/cert-expiry-check.sh
 StandardOutput=journal
 StandardError=journal
 

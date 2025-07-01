@@ -149,11 +149,12 @@ sudo dnf install -y python3-certbot-dns-route53
 - **S3バケット**: バックアップの保存先（デフォルト: `certbot-auto-renew-backup`）
   - **注意**: バケット名を変更する場合は、IAM権限の `Resource` で指定しているバケット名も置き換えてください。
 - **SNSトピック**: 通知先（デフォルト: `certbot-auto-renew-alerts`）
+- **インストールディレクトリ**: スクリプトの配置先（デフォルト: `/opt/certbot-auto-renew-monitoring`）
 
 ## ファイル構成
 
 ```
-/opt/certbot-auto-renew-monitoring/
+[インストールディレクトリ]/
 ├── scripts/
 │   ├── certbot-renew.sh          # 自動更新スクリプト
 │   ├── failure-notify.sh         # 失敗通知スクリプト

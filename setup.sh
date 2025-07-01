@@ -8,7 +8,7 @@ set -euo pipefail
 DEFAULT_LOG_GROUP="/aws/ec2/certbot-auto-renew-monitoring"
 DEFAULT_S3_BUCKET="certbot-auto-renew-backup"
 DEFAULT_SNS_TOPIC="certbot-auto-renew-alerts"
-INSTALL_DIR="/opt/certbot-auto-renew-monitoring"
+DEFAULT_INSTALL_DIR="/opt/certbot-auto-renew-monitoring"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # 色付きログ出力
@@ -87,10 +87,15 @@ get_configuration() {
     read -r SNS_TOPIC
     SNS_TOPIC=${SNS_TOPIC:-$DEFAULT_SNS_TOPIC}
     
+    echo -n "インストールディレクトリ (デフォルト: $DEFAULT_INSTALL_DIR): "
+    read -r INSTALL_DIR
+    INSTALL_DIR=${INSTALL_DIR:-$DEFAULT_INSTALL_DIR}
+    
     log_info "設定値:"
     echo "  CloudWatch Logs: $LOG_GROUP_NAME"
     echo "  S3バケット: $S3_BUCKET"
     echo "  SNSトピック: $SNS_TOPIC"
+    echo "  インストールディレクトリ: $INSTALL_DIR"
     
     echo -n "この設定で続行しますか？ (y/N): "
     read -r confirm
@@ -169,11 +174,17 @@ configure_scripts() {
 configure_systemd() {
     log_info "systemdサービスを設定しています..."
     
-    # systemdファイルをコピー
+    # systemdファイルをコピーして設定値を書き換え
     local systemd_files=("certbot-auto-renew.service" "certbot-auto-renew.timer" "certbot-failure-notify.service" "certbot-expiry-check.service" "certbot-expiry-check.timer")
     
     for file in "${systemd_files[@]}"; do
         cp "$SCRIPT_DIR/systemd/$file" "/etc/systemd/system/"
+        
+        # サービスファイルのExecStartパスを書き換え
+        if [[ "$file" == *.service ]]; then
+            sed -i "s|__INSTALL_DIR__|$INSTALL_DIR|g" "/etc/systemd/system/$file"
+        fi
+        
         log_success "systemdファイルをインストールしました: $file"
     done
     

@@ -7,7 +7,7 @@ Wants=network-online.target
 Type=oneshot
 User=root
 Group=root
-ExecStart=/opt/certbot-auto-renew-monitoring/scripts/certbot-renew.sh
+ExecStart=__INSTALL_DIR__/scripts/certbot-renew.sh
 StandardOutput=journal
 StandardError=journal
 
