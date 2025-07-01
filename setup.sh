@@ -105,6 +105,34 @@ get_configuration() {
     fi
 }
 
+# AWS権限チェック
+check_aws_permissions() {
+    log_info "AWS権限をチェックしています..."
+    
+    # CloudWatch Logs権限チェック
+    if ! aws logs describe-log-groups --max-items 1 &>/dev/null; then
+        log_error "CloudWatch Logs の DescribeLogGroups 権限がありません"
+        log_error "README.md の IAM権限設定を確認してください"
+        exit 1
+    fi
+    
+    # S3権限チェック（list-buckets で基本権限確認）
+    if ! aws s3 ls &>/dev/null; then
+        log_error "S3 の基本権限がありません"
+        log_error "README.md の IAM権限設定を確認してください"
+        exit 1
+    fi
+    
+    # SNS権限チェック
+    if ! aws sns list-topics &>/dev/null; then
+        log_error "SNS の ListTopics 権限がありません"
+        log_error "README.md の IAM権限設定を確認してください"
+        exit 1
+    fi
+    
+    log_success "AWS権限チェック完了"
+}
+
 # AWSリソースの作成
 create_aws_resources() {
     log_info "AWSリソースを作成しています..."
@@ -250,6 +278,7 @@ main() {
     
     check_requirements
     get_configuration
+    check_aws_permissions
     create_aws_resources
     configure_scripts
     configure_systemd

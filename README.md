@@ -51,7 +51,8 @@ sudo dnf install -y python3-certbot-dns-route53
                    "logs:CreateLogGroup",
                    "logs:CreateLogStream",
                    "logs:PutLogEvents",
-                   "logs:DescribeLogStreams"
+                   "logs:DescribeLogStreams",
+                   "logs:DescribeLogGroups"
                ],
                "Resource": "arn:aws:logs:*:*:*"
            },
