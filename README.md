@@ -222,9 +222,29 @@ AWSコンソールでCloudWatch Logsにメトリクスフィルターを設定�
 
 1. **CloudWatch Logs** → **ロググループ** → `/aws/ec2/certbot-auto-renew-monitoring`
 2. **メトリクスフィルター** を作成:
-   - 失敗通知: `[CERTBOT AUTO-RENEW FAILURE]`
-   - 有効期限警告: `[CERTBOT CERTIFICATE EXPIRY WARNING]`
-3. **CloudWatch アラーム** を作成してSNSに通知
+    1. 失敗通知（入力例）:
+        - フィルターパターン: `"[CERTBOT AUTO-RENEW FAILURE]"`
+        - フィルター名: `失敗通知`
+        - メトリクス名前空間: `CertBot/Monitoring`
+        - メトリクス名: `CertbotRenewalFailures`
+        - メトリクス値: `1`
+        - Unit: カウント
+    2. 有効期限警告（入力例）:
+        - フィルターパターン: `"[CERTBOT CERTIFICATE EXPIRY WARNING]"`
+        - フィルター名: `有効期限警告`
+        - メトリクス名前空間: `CertBot/Monitoring`
+        - メトリクス名: `CertbotExpiryWarnings`
+        - メトリクス値: `1`
+        - Unit: カウント
+3. **CloudWatch アラーム** を作成:
+    1. 失敗通知:
+        - 条件: `>= 1`（1回以上の失敗で発火）
+        - 通知の送信先: `certbot-auto-renew-alerts`
+        - アラーム名: `証明書更新失敗アラーム`
+    2. 有効期限警告:
+        - 条件: `>= 1`（1回以上の失敗で発火）
+        - 通知の送信先: `certbot-auto-renew-alerts`
+        - アラーム名: `証明書有効期限警告アラーム`
 
 ### SNS設定
 
